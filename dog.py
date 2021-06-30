@@ -1,6 +1,6 @@
 def dog(noise):
   if noise == 'bark':
-    return 'woof'
+    return 'warf'
   else:
     return 'confused dog grunts'
 
