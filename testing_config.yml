@@ -1,0 +1,58 @@
+version: 2.1
+
+parameters:
+  version-param:
+    type: string
+    default: "--version"
+
+jobs:
+  build:
+    docker: 
+      - image: cimg/node:14.10.1
+    steps:
+      - add_ssh_keys
+      - run: node << pipeline.parameters.version-param >>
+      - npm install -g yarn
+      - run: yarn --version
+      - store_artifacts:
+          path: test-results
+          destination: results
+
+  verify:
+    docker: 
+      - image: cimg/node:14.10.1
+    steps:
+      - checkout
+      - run: |
+         if [ << pipeline.parameters.version-param >> = "--version" ]
+            echo Version param verified
+         else
+            exit 1
+         fi
+      # This step should run on both success and failure
+      - run:
+          name: Always run to check node version
+          command: node << pipeline.parameters.version-param >>
+          when: failure
+      # This step should persist the files in the 'assets' directory located in the root of the repo
+      - persist_to_workspace:
+          root: ~/
+          paths: assets
+
+workflows:
+  build-and-verify:
+    jobs:
+      - build:
+          pre-steps:
+            - run:
+                command: |
+                  mkdir test-results
+                  cd test-results
+                  touch results.json
+                  echo results_not_found >> results.json
+          filters:
+            branches:
+              ignore: test-branch
+      - verify:
+          requires:
+            - builld
