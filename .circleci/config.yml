@@ -28,7 +28,7 @@ jobs:
              echo Version param verified
           else
              exit 1
-         fi
+          fi
       # This step should run on both success and failure
       - run:
           name: Always run to check node version
