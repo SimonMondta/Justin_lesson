@@ -12,6 +12,7 @@ jobs:
     steps:
       - add_ssh_keys
       - run: node << pipeline.parameters.version-param >>
+	  - run: npm init
       - run: npm install yarn
       - run: yarn --version
       - store_artifacts:
@@ -27,7 +28,7 @@ jobs:
          if [ << pipeline.parameters.version-param >> = "--version" ]
             echo Version param verified
          else
-            exit 1
+            exit
          fi
       # This step should run on both success and failure
       - run:
