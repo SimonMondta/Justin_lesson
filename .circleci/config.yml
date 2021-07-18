@@ -35,7 +35,7 @@ jobs:
           command: node << pipeline.parameters.version-param >>
           when: always
       # This step should persist the files in the 'assets' directory located in the root of the repo
-      - echo pwd
+      - run: pwd
       - persist_to_workspace:
           root: ~/
           paths: assets
