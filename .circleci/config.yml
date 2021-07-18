@@ -55,4 +55,4 @@ workflows:
               ignore: test-branch
       - verify:
           requires:
-            - builld
+            - build
