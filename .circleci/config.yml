@@ -24,8 +24,8 @@ jobs:
     steps:
       - checkout
       - run: |
-         if [ node << pipeline.parameters.version-param >> = "--version" ]
-             echo Version param verified
+         if [ << pipeline.parameters.version-param >> = "--version" ] 
+         then echo Version param verified
          else
              exit 1
          fi
