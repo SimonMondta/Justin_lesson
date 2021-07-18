@@ -25,9 +25,9 @@ jobs:
       - checkout
       - run: |
          if [ << pipeline.parameters.version-param >> = "--version" ]
-            echo Version param verified
+            echo "Version param verified"
          else
-            exit
+            exit 1
          fi
       # This step should run on both success and failure
       - run:
