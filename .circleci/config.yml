@@ -24,11 +24,11 @@ jobs:
     steps:
       - checkout
       - run: |
-          if [ << pipeline.parameters.version-param >> = "--version" ]
+         if [ << pipeline.parameters.version-param >> = default ]
              echo Version param verified
-          else
+         else
              exit 1
-          fi
+         fi
       # This step should run on both success and failure
       - run:
           name: Always run to check node version
